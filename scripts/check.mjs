@@ -1,0 +1,11 @@
+import { existsSync, readFileSync } from 'node:fs';
+const manifest = JSON.parse(readFileSync('dist/page-manifest.json','utf8'));
+const required = ['dist/index.html','dist/tools/severance/index.html','dist/cities/beijing/severance/index.html','dist/sitemap.xml','dist/robots.txt'];
+for (const f of required) if(!existsSync(f)) throw new Error(`missing ${f}`);
+const home = readFileSync('dist/index.html','utf8');
+if(!home.includes('劳动权益计算器')) throw new Error('home title missing');
+const sitemap = readFileSync('dist/sitemap.xml','utf8');
+const locs = (sitemap.match(/<loc>/g)||[]).length;
+if(locs !== manifest.pages) throw new Error(`sitemap count ${locs} != manifest ${manifest.pages}`);
+if(manifest.pages < 300) throw new Error('page count too low');
+console.log(`Check OK: ${manifest.pages} pages, ${manifest.cities} cities, ${manifest.tools} tools`);
