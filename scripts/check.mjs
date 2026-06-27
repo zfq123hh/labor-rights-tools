@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 const manifest = JSON.parse(readFileSync('dist/page-manifest.json','utf8'));
-const required = ['dist/index.html','dist/templates/index.html','dist/guides/labor-arbitration-evidence-checklist/index.html','dist/tools/severance/index.html','dist/cities/beijing/severance/index.html','dist/sitemap.xml','dist/robots.txt'];
+const required = ['dist/index.html','dist/templates/index.html','dist/guides/labor-arbitration-evidence-checklist/index.html','dist/guides/labor-arbitration-application-template/index.html','dist/tools/severance/index.html','dist/cities/beijing/severance/index.html','dist/sitemap.xml','dist/robots.txt'];
 for (const f of required) if(!existsSync(f)) throw new Error(`missing ${f}`);
 const home = readFileSync('dist/index.html','utf8');
 if(!home.includes('劳动权益计算器')) throw new Error('home title missing');
